@@ -23,3 +23,25 @@ export function useTicketsAssignedToMyOffice({
         }
     })
 }
+
+
+export function useTicketsSentByMyOffice({
+    page = 1,
+    searchQuery = undefined,
+}: PaginatedQueryParams){
+    return useQuery({
+        queryKey: ["tickets", "sentByMyOffice", page, searchQuery],
+        queryFn: async () => {
+            const res = await apiReq({
+                method: "GET",
+                url: "/tickets/sent-by-my-office",
+                payload: {
+                    page,
+                    searchQuery
+                }
+            })
+
+            return res as PaginatedTicketsResponse
+        }
+    })
+}

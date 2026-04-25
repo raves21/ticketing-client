@@ -16,7 +16,7 @@ export const useAuthStore = defineStore("store", {
     actions: {
         setCurrentUser(user: User | null){
             if(user){
-                localStorage.setItem("user", JSON.stringify(user))
+                localStorage.setItem("currentUser", JSON.stringify(user))
             }
         },
     }

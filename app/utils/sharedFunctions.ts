@@ -1,6 +1,6 @@
 
 
-export function matchesRoute({routeName, fuzzy = false} : {routeName: string, fuzzy: boolean}){
+export function matchesRoute({routeName, fuzzy = true} : {routeName: string, fuzzy?: boolean}){
     const route = useRoute();
     
     if(fuzzy){

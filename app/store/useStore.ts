@@ -16,15 +16,17 @@ const defaultState: State = {
 export const useStore = defineStore("store", {
     state: () => defaultState,
     actions: {
-        open(component: Component, props = {}) {
+        openDialog(component: Component, props = {}) {
             this.isOpen = true;
             this.component = component;
             this.props = props;
         },
-        close() {
+        closeDialog() {
             this.isOpen = false;
-            this.component = null;
+            setTimeout(() => {
+                this.component = null;
             this.props = null;
+            }, 150);
         }
     }
 })

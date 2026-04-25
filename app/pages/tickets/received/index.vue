@@ -1,5 +1,5 @@
 <template>
-  <p>content</p>
+  <p>received</p>
 </template>
 
 <script setup lang="ts">

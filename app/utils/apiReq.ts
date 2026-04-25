@@ -6,7 +6,6 @@ type Args = {
 }
 
 export async function apiReq({method, url, payload}: Args): Promise<any>{
-
     const token = localStorage.getItem("token");
 
     if(!token && url !== "/auth/login"){

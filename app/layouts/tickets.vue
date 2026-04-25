@@ -1,21 +1,23 @@
 <template>
   <DefaultLayout>
-    <div class="flex flex-col gap-6">
-      <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-14 rounded-md p-10 flex-1 bg-white shadow-sm">
+      <div class="flex flex-col gap-8">
         <p class="text-2xl font-bold">TICKETS</p>
         <div
-          class="flex rounded-md overflow-hidden border border-gray-500 w-min"
+          class="flex rounded-md overflow-hidden border border-gray-400 w-[500px]"
         >
           <NuxtLink
             v-for="(route, i) in routes"
-            key="i"
+            :key="i"
             :class="
-              cn('text-gray-500 px-3 py-2', {
-                'bg-white text-black font-medium': matchesRoute({
-                  routeName: '/tickets/received',
-                  fuzzy: true,
-                }),
-              })
+              cn(
+                'text-gray-500 bg-bg-primary flex-1 py-2 grid place-items-center transition-colors',
+                {
+                  'bg-accent text-white font-medium': matchesRoute({
+                    routeName: route.href,
+                  }),
+                },
+              )
             "
             :to="route.href"
           >
@@ -39,11 +41,11 @@ type Route = {
 
 const routes: Route[] = [
   {
-    name: "Received",
+    name: "RECEIVED",
     href: "/tickets/received",
   },
   {
-    name: "Sent",
+    name: "SENT",
     href: "/tickets/sent",
   },
 ];

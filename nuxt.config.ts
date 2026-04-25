@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      API_BASE_URL: '',
+      API_BASE_URL: process.env.API_BASE_URL || '',
     }
   },
   plugins: ["./plugins/vue-query.ts"],

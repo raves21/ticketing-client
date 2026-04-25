@@ -1,3 +1,4 @@
+import { apiReq } from "@/utils/apiReq";
 import {useQuery} from "@tanstack/vue-query"
 import type { User } from "../types"
 
@@ -5,6 +6,7 @@ export function useCurrentUser(){
     return useQuery({
         queryKey: ["currentUser"],
         queryFn: async () => {
+            console.log("USECURRENTUSER");
             const res = await apiReq({
                 method: "GET",
                 url: "/auth/me",
