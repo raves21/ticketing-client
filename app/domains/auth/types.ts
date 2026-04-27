@@ -11,6 +11,6 @@ export type User = {
     last_name: string
     email: string
     role: string
-    office: Office | undefined
+    office: Office
     permissions: string[] | undefined
 }

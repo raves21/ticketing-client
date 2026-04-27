@@ -1,13 +1,24 @@
 <template>
-  <DataTable
-    :columns="columns"
-    :data="ticketsSentByMyOffice?.data || []"
-    :actions="actions"
-  >
-    <template #code="{ value }">
-      <p class="font-semibold">{{ value }}</p>
-    </template>
-  </DataTable>
+  <div class="flex-1 flex flex-col">
+    <LoadingComponent
+      v-if="ticketsSentByMyOfficeStatus === 'pending'"
+      :custom-class="'flex-1'"
+    />
+    <ErrorComponent
+      v-if="ticketsSentByMyOfficeStatus === 'error'"
+      :custom-class="'flex-1'"
+    />
+    <DataTable
+      v-if="ticketsSentByMyOffice"
+      :columns="columns"
+      :data="ticketsSentByMyOffice?.data || []"
+      :actions="actions"
+    >
+      <template #code="{ value }">
+        <p class="font-semibold">{{ value }}</p>
+      </template>
+    </DataTable>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +31,9 @@ import DataTable, {
   type ActionItem,
 } from "~/components/shared/DataTable.vue";
 import { useTicketsSentByMyOffice } from "~/domains/tickets/api/queries";
+import LoadingComponent from "~/components/shared/LoadingComponent.vue";
+import ErrorComponent from "~/components/shared/ErrorComponent.vue";
+import { useGlobalStore } from "~/store/useGlobalStore";
 
 const columns: Column[] = [
   {
@@ -54,6 +68,8 @@ const columns: Column[] = [
   },
 ];
 
+const { openDialog } = useGlobalStore();
+
 const actions: ActionItem[] = [
   {
     label: "View",
@@ -61,5 +77,6 @@ const actions: ActionItem[] = [
   },
 ];
 
-const { data: ticketsSentByMyOffice } = useTicketsSentByMyOffice({});
+const { data: ticketsSentByMyOffice, status: ticketsSentByMyOfficeStatus } =
+  useTicketsSentByMyOffice({});
 </script>

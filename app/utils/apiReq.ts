@@ -40,7 +40,7 @@ export async function apiReq({method, url, payload}: Args): Promise<any>{
     try {
         return await $fetch(url, config);
     } catch (error: any) {
-        console.log(error);
+        console.log(error.response._data);
         switch(error.response.status){
             case 401:
                 localStorage.clear();

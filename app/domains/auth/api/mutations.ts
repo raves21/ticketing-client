@@ -17,3 +17,19 @@ export function useLogin(){
         }
     })
 }
+
+
+export function useLogout(){
+    return useMutation({
+        mutationFn: async () => {
+            await apiReq({
+                method: "POST",
+                url: '/auth/logout',
+            })
+        },
+        onSuccess: () => {
+            localStorage.clear();
+            navigateTo("/login");
+        }
+    })
+}

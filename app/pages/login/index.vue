@@ -55,8 +55,10 @@ import {
   type SubmissionHandler,
 } from "vee-validate";
 import { z } from "zod";
+import ErrorDialog from "~/components/shared/ErrorDialog.vue";
 import { Button } from "~/components/ui/button";
 import { useLogin } from "~/domains/auth/api/mutations";
+import { useGlobalStore } from "~/store/useGlobalStore";
 
 definePageMeta({
   layout: false,
@@ -86,8 +88,14 @@ onMounted(() => {
 
 const { mutateAsync: login } = useLogin();
 
+const { openDialog } = useGlobalStore();
+
 const onSubmit: SubmissionHandler = async (values) => {
-  await login({ email: values.email, password: values.password });
-  navigateTo("/dashboard");
+  try {
+    await login({ email: values.email, password: values.password });
+    navigateTo("/dashboard");
+  } catch (error) {
+    openDialog(ErrorDialog);
+  }
 };
 </script>

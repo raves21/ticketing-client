@@ -94,7 +94,7 @@ export type ActionItem = {
   action: (item: any) => void;
 };
 
-const props = defineProps<{
+defineProps<{
   columns: Column[];
   data: any[];
   actions?: ActionItem[];

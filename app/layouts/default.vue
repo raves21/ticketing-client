@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen font-poppins">
+    <GlobalDialog />
+    <PendingOverlay />
     <TopNavBar />
     <SideBar />
     <main class="w-full min-h-screen pl-[300px] pt-[56px] flex flex-col">
@@ -11,6 +13,8 @@
 </template>
 
 <script setup>
+import GlobalDialog from "~/components/global/GlobalDialog.vue";
+import PendingOverlay from "~/components/global/PendingOverlay.vue";
 import SideBar from "~/components/layout/SideBar.vue";
 import TopNavBar from "~/components/layout/TopNavBar.vue";
 import { useCurrentUser } from "~/domains/auth/api/queries";

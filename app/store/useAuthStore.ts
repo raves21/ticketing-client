@@ -11,7 +11,7 @@ const defaultState: State = {
     currentUser: null
 }
 
-export const useAuthStore = defineStore("store", {
+export const useAuthStore = defineStore("authStore", {
     state: () => defaultState,
     actions: {
         setCurrentUser(user: User | null){

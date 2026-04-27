@@ -11,7 +11,17 @@
         v-for="(route, i) in routes"
         :key="i"
         :to="route.href"
-        class="flex items-center gap-3 py-6 pl-3 rounded-md hover:bg-accent hover:text-white transition-colors hover:font-medium"
+        :class="
+          cn(
+            'flex items-center gap-3 py-6 pl-3 rounded-md hover:bg-gray-400/20 hover:text-black transition-colors font-medium',
+            {
+              'bg-accent text-white hover:bg-accent hover:text-white':
+                matchesRoute({
+                  routeName: route.href,
+                }),
+            },
+          )
+        "
       >
         <component :is="route.icon" />
         <p>{{ route.name }}</p>
@@ -23,6 +33,7 @@
 <script setup lang="ts">
 import { Loader, Ticket, LayoutGrid } from "lucide-vue-next";
 import type { FunctionalComponent } from "vue";
+import { cn } from "~/lib/utils";
 
 type SideBarRoute = {
   name: string;
@@ -32,12 +43,12 @@ type SideBarRoute = {
 
 const routes: SideBarRoute[] = [
   {
-    name: "Dashboard",
+    name: "DASHBOARD",
     icon: LayoutGrid,
     href: "/dashboard",
   },
   {
-    name: "Tickets",
+    name: "TICKETS",
     icon: Ticket,
     href: "/tickets",
   },
