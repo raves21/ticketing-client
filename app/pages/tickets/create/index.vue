@@ -181,10 +181,17 @@ import { useCreateTicket } from "~/domains/tickets/api/mutations";
 import { useGlobalStore } from "~/store/useGlobalStore";
 import LoadingComponent from "~/components/shared/LoadingComponent.vue";
 import ErrorComponent from "~/components/shared/ErrorComponent.vue";
+import { usePendingOverlay } from "~/utils/composables/usePendingOverlay";
 
 const { openDialog } = useGlobalStore();
-const { data: offices, status: officesStatus } = useOffices();
-const { mutateAsync: createTicket } = useCreateTicket();
+const { data: offices, status: officesStatus } = useOffices({ except_own: 1 });
+const { mutateAsync: createTicket, status: createTicketStatus } =
+  useCreateTicket();
+
+usePendingOverlay({
+  isPending: createTicketStatus.value === "pending",
+  pendingMessage: "Creating Ticket",
+});
 
 const priorityLevels = [
   { value: "routine", label: "Routine" },
@@ -213,7 +220,13 @@ const defaultValues: z.infer<typeof zodSchema> = {
 
 const onSubmit: SubmissionHandler = async (values) => {
   try {
-    // await createTicket(values);
+    const formData = new FormData();
+    formData.append("recipient_office_id", values.recipientOfficeId.toString());
+    formData.append("priority_level", values.priorityLevel);
+    formData.append("title", values.requestTitle);
+    formData.append("description", values.description);
+    await createTicket(formData);
+    navigateTo("/tickets");
   } catch (error) {
     openDialog(ErrorDialog);
   }
