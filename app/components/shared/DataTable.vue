@@ -9,6 +9,8 @@
             v-for="col in columns"
             :key="col.accessorKey"
             class="px-6 py-3 font-medium tracking-wider"
+            :class="{ truncate: col.maxWidth }"
+            :style="col.maxWidth ? { maxWidth: col.maxWidth } : {}"
           >
             {{ col.label }}
           </th>
@@ -22,11 +24,15 @@
           v-for="(row, rowIndex) in data"
           :key="rowIndex"
           class="hover:bg-gray-50 transition-colors"
+          :class="{ 'cursor-pointer': onRowClick }"
+          @click="onRowClick?.(row)"
         >
           <td
             v-for="col in columns"
             :key="col.accessorKey"
             class="px-6 py-6 text-gray-700"
+            :class="{ truncate: col.maxWidth }"
+            :style="col.maxWidth ? { maxWidth: col.maxWidth } : {}"
           >
             <slot
               :name="col.accessorKey"
@@ -87,6 +93,7 @@ export type Column = {
   label: string;
   accessorKey: string;
   getValue?: (row: any) => any;
+  maxWidth?: string;
 };
 
 export type ActionItem = {
@@ -98,6 +105,7 @@ defineProps<{
   columns: Column[];
   data: any[];
   actions?: ActionItem[];
+  onRowClick?: (row: any) => void;
 }>();
 
 function resolvePath(obj: any, path: string): any {

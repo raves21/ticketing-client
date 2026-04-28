@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { PaginatedQueryParams } from "~/utils/sharedTypes";
-import type { PaginatedTicketsResponse } from "../types";
+import type { PaginatedTicketsResponse, Ticket } from "../types";
+import axios from "axios";
 
 
 export function useTicketsAssignedToMyOffice({
@@ -32,7 +33,8 @@ export function useTicketsSentByMyOffice({
     return useQuery({
         queryKey: ["tickets", "sentByMyOffice", page, searchQuery],
         queryFn: async () => {
-            const res = await apiReq({
+            const res =
+             await apiReq({
                 method: "GET",
                 url: "/tickets/sent-by-my-office",
                 payload: {
@@ -42,6 +44,20 @@ export function useTicketsSentByMyOffice({
             })
 
             return res as PaginatedTicketsResponse
+        }
+    })
+}
+
+export function useTicketInfo(ticketId: string) {
+    return useQuery({
+        queryKey: ["tickets", ticketId],
+        queryFn: async () => {
+            const {data: ticket} = await apiReq({
+                method: "GET",
+                url: `/tickets/${ticketId}`,
+            })
+
+            return ticket as Ticket
         }
     })
 }

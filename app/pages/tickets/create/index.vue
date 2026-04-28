@@ -189,7 +189,7 @@ const { mutateAsync: createTicket, status: createTicketStatus } =
   useCreateTicket();
 
 usePendingOverlay({
-  isPending: createTicketStatus.value === "pending",
+  isPending: () => createTicketStatus.value === "pending",
   pendingMessage: "Creating Ticket",
 });
 

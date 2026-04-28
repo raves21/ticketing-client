@@ -13,6 +13,7 @@
       :columns="columns"
       :data="ticketsSentByMyOffice?.data || []"
       :actions="actions"
+      :on-row-click="(row) => navigateTo(`/tickets/${row.id}`)"
     >
       <template #code="{ value }">
         <p class="font-semibold">{{ value }}</p>
@@ -67,8 +68,6 @@ const columns: Column[] = [
     accessorKey: "recipient_office.code",
   },
 ];
-
-const { openDialog } = useGlobalStore();
 
 const actions: ActionItem[] = [
   {
